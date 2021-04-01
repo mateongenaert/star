@@ -1,10 +1,5 @@
-FROM ubuntu:20.04
-MAINTAINER mongenae@its.jnj.com
-
-ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=Europe/London
-
 ENV STAR_VERSION 2.7.8a
+ENV SAMTOOLS_VERSION 1.12
 
 WORKDIR /home
 
@@ -23,6 +18,18 @@ RUN make STAR
 
 
 ENV PATH /home/STAR-${STAR_VERSION}/source:${PATH}
+ENV LD_LIBRARY_PATH "/usr/local/lib:${LD_LIBRARY_PATH}"
+
+WORKDIR /home
+RUN wget --no-check-certificate https://github.com/samtools/samtools/releases/download/${SAMTOOLS_VERSION}/samtools-${SAMTOOLS_VERSION}.tar.bz2
+RUN tar -xvjf samtools-${SAMTOOLS_VERSION}.tar.bz2
+
+WORKDIR /home/samtools-${SAMTOOLS_VERSION}
+RUN ./configure --prefix=/home/samtools-${SAMTOOLS_VERSION}
+RUN make
+RUN make install
+
+ENV PATH /home/samtools-${SAMTOOLS_VERSION}:${PATH}
 ENV LD_LIBRARY_PATH "/usr/local/lib:${LD_LIBRARY_PATH}"
 
 RUN echo "export PATH=$PATH" > /etc/environment
