@@ -1,3 +1,9 @@
+FROM ubuntu:20.04
+MAINTAINER mongenae@its.jnj.com
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/London
+
 ENV STAR_VERSION 2.7.8a
 ENV SAMTOOLS_VERSION 1.12
 
