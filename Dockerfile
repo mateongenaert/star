@@ -12,7 +12,7 @@ WORKDIR /home
 RUN apt-get update && \
     apt-get upgrade -y 
 
-RUN apt-get install -y --fix-missing zlibc zlib1g zlib1g-dev make gcc g++ wget
+RUN apt-get install -y --fix-missing zlibc zlib1g zlib1g-dev make gcc g++ wget libncurses5-dev
 
 RUN apt-get update
 
